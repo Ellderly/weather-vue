@@ -1,0 +1,78 @@
+<template>
+  <div class="location">
+  <header class="header">
+    <ul>
+      <li><button @click="(e) => changePage = e.target.innerText">City</button></li>
+      <li><button @click="(e) => changePage = e.target.innerText">All</button></li>
+    </ul>
+  </header>
+    <ThisCity v-if="changePage === 'City'" :defaultCity="defaultCity"/>
+    <AllCitis v-if="changePage === 'All'"
+              :weathers="weathers"
+              @item="itemWeather"
+              @deleteItem="deleteItem"
+    />
+  </div>
+</template>
+
+<script>
+import {ref} from "vue";
+import ThisCity from "@/components/ThisCity.vue";
+import AllCitis from "@/components/AllCitis.vue";
+export default {
+  components: {AllCitis, ThisCity},
+  props: {
+    defaultCity: {
+    type: Array,
+    required: true
+    },
+    weathers: {
+      type: Array,
+      required: true
+    }
+  },
+
+  setup(props, context) {
+
+    const changePage = ref('City')
+
+    const itemWeather = (item) => {
+      context.emit('itemWeather', item)
+    }
+    const deleteItem = (item) => {
+      context.emit('deleteItem', item)
+    }
+
+    return {changePage, itemWeather,deleteItem}
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+.location{
+  max-width: 45%;
+  width: 100%;
+  padding: 50px;
+  .header{
+    ul{
+      margin: 0;
+      padding: 0;
+      display: flex;
+      gap: 30px;
+      li button{
+        transition: .2s;
+        border: 0;
+        border-bottom: 1px solid #fff;
+        font-weight: 600;
+        font-size: 16px;
+        cursor: pointer;
+        color: #363636;
+        background: #fff;
+        &:hover{
+          border-bottom: 2px solid green;
+        }
+      }
+    }
+  }
+}
+</style>
