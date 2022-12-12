@@ -5,11 +5,11 @@
         <button @click.prevent="sortMax">Max</button>
         <button @click.prevent="sortMin">Min</button>
       </li>
-      <li v-for="item in weathers" :key="item.city" @click="testWeather(item)">
-        <p>{{item.city}}</p>
-        <p>{{item.daily.temperature_2m_max[0]}}</p>
-        <p>{{item.daily.temperature_2m_min[0]}}</p>
-        <button class="deleteItem" @click.stop="deleteItem(item)"></button>
+      <li v-for="item in allWeathers" :key="item" @click="testWeather(item)">
+        <p>{{item[0].location.name}}</p>
+        <p>{{item[0].forecast.forecastday[0].day.maxtemp_c}}<sup>o</sup></p>
+        <p>{{item[0].forecast.forecastday[0].day.mintemp_c}}<sup>o</sup></p>
+        <button class="deleteItem" @click.stop="deleteItem(item[0])"></button>
       </li>
     </ul>
   </div>
@@ -19,7 +19,7 @@
 export default {
 
   props: {
-    weathers: {
+    allWeathers: {
       type: Array,
       required: true
     }
@@ -38,20 +38,20 @@ export default {
         const sortMin = () => {
           props.weathers.sort((a,b) => b.daily.temperature_2m_min[0] - a.daily.temperature_2m_min[0])
         }
-
-
     return {testWeather, deleteItem, sortMax, sortMin}
   }
 }
 </script>
 
 <style lang="scss" scoped>
+
 .all-weathers{
   ul{
     padding: 0;
     margin: 20px 0 0 0 ;
     li{
       display: flex;
+      align-items: center;
       gap: 50px;
       padding: 5px 10px;
       cursor: pointer;
@@ -66,6 +66,8 @@ export default {
       .deleteItem{
         position: relative;
         width: 33px;
+        height: 33px;
+        padding: 0;
         border: none;
         background: none;
         cursor: pointer;

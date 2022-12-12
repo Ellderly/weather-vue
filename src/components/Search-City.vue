@@ -5,15 +5,15 @@
         WeatherEll
       </div>
       <div class="location-wrapper">
-        <LocationChange :defaultCity="defaultCity"/>
+        <LocationChange :defaultCity="defaultCity" :weathers="weathers"/>
       </div>
     </div>
     <main class="main">
       <h1>Weather</h1>
       <div class="line"></div>
-      <form  @submit.prevent="onsubmitForm"  class="form">
+      <form  @submit.prevent="textProd"  class="form">
           <div class="wrapperInputSearch">
-            <input disabled type="text" name="search" v-model="searchLocationInput" class="searchLocationInput" id="searchLocation" placeholder="В разработке" required>
+            <input type="text" name="search" v-model="searchLocationInput" class="searchLocationInput" :maxlength="20" id="searchLocation" placeholder="Enter city" required>
             <label for="searchLocation"><img src="@/assets/search.svg" alt="search-image"></label>
           </div>
           <button disabled class="searchLocationBtn"></button>
@@ -33,16 +33,21 @@ export default {
     defaultCity:{
       type: Array,
       required: true
+    },
+    weathers:{
+      type: Array,
+      required: true
     }
   },
   setup(props, context) {
     const searchLocationInput = ref('')
 
-    const onsubmitForm = () => {
-      context.emit('onsubmitForm', searchLocationInput.value)
+    const textProd = () => {
+      context.emit('textProd', searchLocationInput.value)
       searchLocationInput.value = ''
     }
-    return {searchLocationInput, onsubmitForm}
+
+    return {searchLocationInput, textProd}
   }
 }
 </script>
@@ -106,7 +111,7 @@ export default {
       position: relative;
       width: 400px;
       .searchLocationInput{
-        padding: 15px 20px;
+        padding: 15px 50px 15px 20px;
         border-radius: 7px;
         width: 100%;
         background-color: rgba(255, 255, 255, 0.3);
@@ -119,7 +124,7 @@ export default {
       }
       label{
         position: absolute;
-        top: 10px;
+        top: 13px;
         right: 15px;
         cursor: pointer;
         img{

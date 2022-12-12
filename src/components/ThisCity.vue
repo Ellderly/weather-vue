@@ -1,19 +1,19 @@
 <template>
   <div>
     <h2>Today</h2>
-    <div class="card-wrapper" v-for="item in defaultCity" :key="item">
+    <div class="card-wrapper" v-for="item in weathers" :key="item">
       <div class="card">
         <div class="card__left-content">
-          <div class="card__temp">Max {{item.daily.temperature_2m_max[0]}}<sup>o</sup></div>
-          <div class="card__temp">Min {{item.daily.temperature_2m_min[0]}}<sup>o</sup></div>
-          <div class="card__date">{{item.daily.time[0]}}</div>
+          <div class="card__temp">Max {{item.forecast.forecastday[0].day.maxtemp_c}}<sup>o</sup></div>
+          <div class="card__temp">Min {{item.forecast.forecastday[0].day.mintemp_c}}<sup>o</sup></div>
+          <div class="card__date">{{item.forecast.forecastday[0].date}}</div>
         </div>
         <div class="card__right-content">
           <ul>
-            <li>latitude: {{item.latitude}}</li>
-            <li>longitude {{item.longitude}}</li>
-            <li>elevation: {{item.elevation}}</li>
-            <li>city: {{item.city}}</li>
+            <li>rainfall: {{item.forecast.forecastday[0].day.daily_chance_of_rain}}%</li>
+            <li>snowfall: {{item.forecast.forecastday[0].day.daily_chance_of_snow}}%</li>
+            <li>wind-speed: {{item.forecast.forecastday[0].day.maxwind_kph}}</li>
+            <li>city: {{item.location.name}}</li>
           </ul>
         </div>
       </div>
@@ -21,14 +21,14 @@
               <h2>Daily</h2>
               <div class="wrapper">
                 <div class="other-card-block">
-                    <div class="card__temp">Max {{item.daily.temperature_2m_max[1]}}<sup>o</sup></div>
-                    <div class="card__temp">Min {{item.daily.temperature_2m_min[1]}}<sup>o</sup></div>
-                    <div class="card__date">{{item.daily.time[1]}}</div>
+                    <div class="card__temp">Max {{item.forecast.forecastday[1].day.maxtemp_c}}<sup>o</sup></div>
+                    <div class="card__temp">Min {{item.forecast.forecastday[1].day.mintemp_c}}<sup>o</sup></div>
+                    <div class="card__date">{{item.forecast.forecastday[1].date}}</div>
                 </div>
                 <div class="other-card-block">
-                    <div class="card__temp">Max {{item.daily.temperature_2m_max[2]}}<sup>o</sup></div>
-                    <div class="card__temp">Min {{item.daily.temperature_2m_min[2]}}<sup>o</sup></div>
-                    <div class="card__date">{{item.daily.time[2]}}</div>
+                    <div class="card__temp">Max {{item.forecast.forecastday[2].day.maxtemp_c}}<sup>o</sup></div>
+                    <div class="card__temp">Min {{item.forecast.forecastday[2].day.mintemp_c}}<sup>o</sup></div>
+                  <div class="card__date">{{item.forecast.forecastday[2].date}}</div>
                 </div>
               </div>
               </div>
@@ -39,19 +39,17 @@
 <script>
 export default {
   props: {
-    defaultCity: {
+    weathers: {
       type: Array,
       required: true
     }
   },
   setup() {
 
-
     return {}
   }
 }
 </script>
-
 <style lang="scss" scoped>
 h2{
   font-size: 45px;
@@ -95,6 +93,7 @@ h2{
   .wrapper{
     display: flex;
     gap: 25px;
+    flex-wrap: wrap;
     .other-card-block{
       background: none;
       cursor: default;
@@ -104,6 +103,7 @@ h2{
       margin: 60px 0 0 0;
       padding: 20px;
       width: max-content;
+      flex: 0 0 auto;
       .card__temp{
         font-size: 20px;
         font-weight: 600;

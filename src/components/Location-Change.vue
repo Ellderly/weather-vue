@@ -1,11 +1,11 @@
 <template>
-  <button class="location" >
+  <button class="location">
     <div class="image">
       <img src="@/assets/location.svg" alt="location-image">
     </div>
     <div class="content">
       <p>Current Location</p>
-      <h4 v-for="item in defaultCity" :key="item.city">{{item.city}}</h4>
+      <h4 v-for="item in weathers" :key="item">{{item.location.name}}, {{item.location.country}}</h4>
     </div>
   </button>
 </template>
@@ -18,10 +18,13 @@ export default {
     defaultCity:{
       type: Array,
       required: true
+    },
+    weathers:{
+      type: Array,
+      required: true
     }
   },
   setup(props, context) {
-
     return {}
   }
 }

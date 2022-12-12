@@ -1,8 +1,8 @@
 <template>
   <div class="container">
-    <SearchCity @onsubmitsForm="onsubmitForm" :defaultCity="defaultCity" />
+    <SearchCity :defaultCity="defaultCity" :weathers="weathers" @textProd="textProd"/>
     <Location
-        :defaultCity="defaultCity"
+        :allWeathers="allWeathers"
         :weathers="weathers"
         @itemWeather="itemWeather"
         @deleteItem="deleteItem"
@@ -23,27 +23,35 @@ export default {
   setup() {
     let isOpenModal = ref(false)
     const weathers = ref([]);
+    const allWeathers = ref([])
     const defaultCity = ref([]);
 
+      const textProd = async (e) => {
+      try {
+        weathers.value = []
+        await axios.get(`https://api.weatherapi.com/v1/forecast.json?key=7651423609bc4c27b00165325221012&q=${e}&days=4&aqi=no&alerts=no`)
+            .then(e => weathers.value.push(e.data))
+        allWeathers.value.push(weathers.value)
+      } catch (e) {
+        alert(e + " " + 'you entered the wrong name, try again in another language')
+      }
+    }
+
     onMounted(() => {
-      axios.get('https://63926a80b750c8d178ddf6f9.mockapi.io/city')
-          .then(e => weathers.value.push(...e.data))
-      axios.get('https://63926a80b750c8d178ddf6f9.mockapi.io/city?search=kyiv')
-          .then(e => defaultCity.value.push(...e.data))
+          axios.get('https://api.weatherapi.com/v1/forecast.json?key=7651423609bc4c27b00165325221012&q=London&days=4&aqi=no&alerts=no')
+          .then(e => weathers.value.push(e.data))
     })
 
-    const onsubmitForm = (inputCity) => {
-      const newCity = inputCity
-    }
     const itemWeather = (item) => {
       defaultCity.value = []
       defaultCity.value.push(item)
     }
 
     const deleteItem = (item) => {
-      weathers.value = weathers.value.filter(e => e.city !== item.city)
+      allWeathers.value = allWeathers.value.filter(e => e[0].location.name !== item.location.name)
     }
-    return {onsubmitForm, isOpenModal, weathers, defaultCity, itemWeather, deleteItem}
+
+    return {isOpenModal, weathers, defaultCity, itemWeather, deleteItem, textProd, allWeathers}
   }
 }
 </script>

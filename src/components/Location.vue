@@ -3,12 +3,12 @@
   <header class="header">
     <ul>
       <li><button @click="(e) => changePage = e.target.innerText">City</button></li>
-      <li><button @click="(e) => changePage = e.target.innerText">All</button></li>
+      <li><button @click="(e) => changePage = e.target.innerText">Frombarroe</button></li>
     </ul>
   </header>
-    <ThisCity v-if="changePage === 'City'" :defaultCity="defaultCity"/>
-    <AllCitis v-if="changePage === 'All'"
-              :weathers="weathers"
+    <ThisCity v-if="changePage === 'City'"  :weathers="weathers"/>
+    <AllCitis v-if="changePage === 'Frombarroe'"
+              :allWeathers="allWeathers"
               @item="itemWeather"
               @deleteItem="deleteItem"
     />
@@ -22,7 +22,7 @@ import AllCitis from "@/components/AllCitis.vue";
 export default {
   components: {AllCitis, ThisCity},
   props: {
-    defaultCity: {
+    allWeathers: {
     type: Array,
     required: true
     },
@@ -68,6 +68,7 @@ export default {
         cursor: pointer;
         color: #363636;
         background: #fff;
+        border-bottom: 2px solid #fff;
         &:hover{
           border-bottom: 2px solid green;
         }
