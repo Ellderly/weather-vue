@@ -1,11 +1,11 @@
 <template>
-  <button class="location">
+  <button v-for="item in weathers" id="location" class="location" @click.prevent="favorites(item.location.name)">
     <div class="image">
       <img src="@/assets/location.svg" alt="location-image">
     </div>
     <div class="content">
       <p>Current Location</p>
-      <h4 v-for="item in weathers" :key="item">{{item.location.name}}, {{item.location.country}}</h4>
+      <h4 :key="item">{{item.location.name}}, {{item.location.country}}</h4>
     </div>
   </button>
 </template>
@@ -15,17 +15,19 @@ import {ref} from "vue";
 
 export default {
   props: {
-    defaultCity:{
-      type: Array,
-      required: true
-    },
     weathers:{
       type: Array,
       required: true
     }
   },
+  emits: ['favoritesItem'],
   setup(props, context) {
-    return {}
+
+    const favorites = (e) => {
+      context.emit('favoritesItem', e);
+      console.log(e)
+    }
+    return {favorites}
   }
 }
 </script>

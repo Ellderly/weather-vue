@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="weathers.length">
     <h2>Today</h2>
     <div class="card-wrapper" v-for="item in weathers" :key="item">
       <div class="card">
@@ -69,6 +69,7 @@ h2{
     flex-direction: column;
     justify-content: space-between;
     border-right: 1px solid gray;
+    margin-right: 5px;
     .card__temp{
       font-size: 20px;
       font-weight: 600;
@@ -82,6 +83,24 @@ h2{
     ul{
       padding: 0;
       margin: 0;
+    }
+  }
+  @media (max-width: 568px) {
+    max-width: 365px;
+    width: auto;
+  }
+  @media(max-width: 400px){
+    padding: 15px;
+    .card__left-content{
+      .card__temp{
+        font-size: 15px;
+      }
+      .card__date{
+        font-size: 12px;
+      }
+    }
+    .card__right-content ul li{
+      font-size: 12px;
     }
   }
 }
@@ -110,6 +129,14 @@ h2{
       }
       .card__date{
         margin-top: 15px;
+      }
+    }
+  }
+  @media (max-width: 400px) {
+    .wrapper{
+      justify-content: center;
+      .other-card-block{
+        margin: 20px 0 0 0;
       }
     }
   }

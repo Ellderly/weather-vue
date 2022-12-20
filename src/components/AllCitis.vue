@@ -1,11 +1,12 @@
 <template>
   <div class="all-weathers">
-    <ul>
-      <li class="btnSort">
-        <button @click.prevent="sortMax">Max</button>
-        <button @click.prevent="sortMin">Min</button>
-      </li>
-      <li v-for="item in allWeathers" :key="item" @click="testWeather(item)">
+    <ul v-if="allWeathers.length">
+<!--      на данный момент вырезано из контента-->
+<!--      <li class="btnSort">-->
+<!--        <button @click.prevent="sortMax">Max</button>-->
+<!--        <button @click.prevent="sortMin">Min</button>-->
+<!--      </li>-->
+      <li v-for="item in allWeathers" :key="item" @click="changeWeather(item[0].location.name, item[0].location.country)">
         <p>{{item[0].location.name}}</p>
         <p>{{item[0].forecast.forecastday[0].day.maxtemp_c}}<sup>o</sup></p>
         <p>{{item[0].forecast.forecastday[0].day.mintemp_c}}<sup>o</sup></p>
@@ -26,19 +27,20 @@ export default {
   },
   setup(props, context) {
 
-    const testWeather = (item) => {
-      context.emit('item', item)
+    const changeWeather = (item, country) => {
+      context.emit('item', item, country)
     }
     const deleteItem = (item) => {
       context.emit('deleteItem', item)
     }
-        const sortMax = () => {
-          props.weathers.sort((a,b) => b.daily.temperature_2m_max[0] - a.daily.temperature_2m_max[0])
-        }
-        const sortMin = () => {
-          props.weathers.sort((a,b) => b.daily.temperature_2m_min[0] - a.daily.temperature_2m_min[0])
-        }
-    return {testWeather, deleteItem, sortMax, sortMin}
+        // const sortMax = () => {
+        //   props.weathers.sort((a,b) => b.daily.temperature_2m_max[0] - a.daily.temperature_2m_max[0])
+        // }
+        // const sortMin = () => {
+        //   props.weathers.sort((a,b) => b.daily.temperature_2m_min[0] - a.daily.temperature_2m_min[0])
+        // }
+    // add to return sortMax, sortMin
+    return {changeWeather, deleteItem}
   }
 }
 </script>
@@ -90,7 +92,6 @@ export default {
       }
       &.btnSort{
         margin-left: 120px;
-        gap: 90px;
         button{
           padding: 10px 15px;
           font-size: 16px;
@@ -108,7 +109,25 @@ export default {
           background: none
         }
       }
+      @media(max-width: 568px){
+        gap: 0;
+        width: 100%;
+        justify-content: space-between;
+      }
+      @media (max-width: 400px) {
+        .deleteItem{
+          width: 27px;
+          height: 27px;
+        }
+        p{
+          font-size: 14px;
+          sup{
+            font-size: 14px;
+          }
+        }
+      }
     }
   }
 }
+
 </style>

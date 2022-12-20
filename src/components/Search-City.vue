@@ -5,7 +5,7 @@
         WeatherEll
       </div>
       <div class="location-wrapper">
-        <LocationChange :defaultCity="defaultCity" :weathers="weathers"/>
+        <LocationChange :weathers="weathers" @favoritesItem="favoritesItem"/>
       </div>
     </div>
     <main class="main">
@@ -16,7 +16,7 @@
             <input type="text" name="search" v-model="searchLocationInput" class="searchLocationInput" :maxlength="20" id="searchLocation" placeholder="Enter city" required>
             <label for="searchLocation"><img src="@/assets/search.svg" alt="search-image"></label>
           </div>
-          <button disabled class="searchLocationBtn"></button>
+          <button @click.prevent="textProd" class="searchLocationBtn"></button>
       </form>
     </main>
   </div>
@@ -30,10 +30,6 @@ export default {
   components: {LocationChange},
 
   props: {
-    defaultCity:{
-      type: Array,
-      required: true
-    },
     weathers:{
       type: Array,
       required: true
@@ -47,7 +43,11 @@ export default {
       searchLocationInput.value = ''
     }
 
-    return {searchLocationInput, textProd}
+    const favoritesItem = (item) => {
+      context.emit('favoritesItem', item)
+    }
+
+    return {searchLocationInput, textProd, favoritesItem}
   }
 }
 </script>
@@ -76,6 +76,11 @@ export default {
       color: #fff;
       font-weight: 500;
       font-size: 25px;
+    }
+    @media(max-width: 568px){
+      flex-direction: column;
+      align-items: center;
+      gap: 25px
     }
   }
   .main{
@@ -138,9 +143,23 @@ export default {
         border: none;
         background-color: rgba(0, 0, 0, 0);
         background-image: url("../assets/goal.svg");
+        background-repeat: no-repeat;
+        background-position: center;
         cursor: pointer;
       }
+      @media (max-width: 568px) {
+        width: 85%;
+        .wrapperInputSearch{
+          width: 100%;
+        }
+      }
     }
+  }
+  @media(max-width: 1000px){
+    max-width: 100%;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
   }
 }
 

@@ -3,11 +3,11 @@
   <header class="header">
     <ul>
       <li><button @click="(e) => changePage = e.target.innerText">City</button></li>
-      <li><button @click="(e) => changePage = e.target.innerText">Frombarroe</button></li>
+      <li><button @click="(e) => changePage = e.target.innerText">Favorites</button></li>
     </ul>
   </header>
     <ThisCity v-if="changePage === 'City'"  :weathers="weathers"/>
-    <AllCitis v-if="changePage === 'Frombarroe'"
+    <AllCitis v-if="changePage === 'Favorites'"
               :allWeathers="allWeathers"
               @item="itemWeather"
               @deleteItem="deleteItem"
@@ -36,8 +36,8 @@ export default {
 
     const changePage = ref('City')
 
-    const itemWeather = (item) => {
-      context.emit('itemWeather', item)
+    const itemWeather = (item, country) => {
+      context.emit('itemWeather', item, country)
     }
     const deleteItem = (item) => {
       context.emit('deleteItem', item)
@@ -74,6 +74,12 @@ export default {
         }
       }
     }
+  }
+  @media (max-width: 1000px) {
+    max-width: 100%;
+  }
+  @media (max-width: 420px) {
+    padding: 20px;
   }
 }
 </style>
