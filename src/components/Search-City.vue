@@ -14,7 +14,7 @@
       <form  @submit.prevent="textProd"  class="form">
           <div class="wrapperInputSearch">
             <input type="text" name="search" v-model="searchLocationInput" class="searchLocationInput" :maxlength="20" id="searchLocation" placeholder="Enter city" required>
-            <label for="searchLocation"><img src="@/assets/search.svg" alt="search-image"></label>
+<!--            <label for="searchLocation"><img src="@/assets/search.svg" alt="search-image"></label>-->
           </div>
           <button @click.prevent="textProd" class="searchLocationBtn"></button>
       </form>
@@ -138,11 +138,11 @@ export default {
       }
     }
       .searchLocationBtn{
-        width: 30px;
-        height: 30px;
+        width: 35px;
+        height: 35px;
         border: none;
         background-color: rgba(0, 0, 0, 0);
-        background-image: url("../assets/goal.svg");
+        background-image: url("@/assets/search.svg");
         background-repeat: no-repeat;
         background-position: center;
         cursor: pointer;

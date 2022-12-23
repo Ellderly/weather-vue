@@ -25,7 +25,6 @@ export default {
 
     const favorites = (e) => {
       context.emit('favoritesItem', e);
-      console.log(e)
     }
     return {favorites}
   }

@@ -36,7 +36,8 @@ export default {
     const weathers = ref([]);
     const allWeathers = ref([])
     const isActiveModal = ref(false)
-    const inActiveWeather = ref([]);
+    let inActiveWeather = ref();
+
 
       const textProd = async (e) => {
       try {
@@ -49,16 +50,22 @@ export default {
     }
 
     onMounted(() => {
-          axios.get('https://api.weatherapi.com/v1/forecast.json?key=7651423609bc4c27b00165325221012&q=London&days=4&aqi=no&alerts=no')
-          .then(e => weathers.value.push(e.data))
+          // axios.get('https://api.weatherapi.com/v1/forecast.json?key=7651423609bc4c27b00165325221012&q=London&days=4&aqi=no&alerts=no')
+          // .then(e => weathers.value.push(e.data))
+         navigator.geolocation.getCurrentPosition(position => {
+          const latitude = position.coords.latitude
+          const longitude = position.coords.longitude
+          axios.get(`https://api.weatherapi.com/v1/forecast.json?key=7651423609bc4c27b00165325221012&q=${latitude},${longitude}&days=4&aqi=no&alerts=no`)
+              .then(e => weathers.value.push(e.data))
+        })
     })
 
     const itemWeather = async (item, country) => {
         const countryAndCity = `${item}, ${country}`
-      console.log(countryAndCity)
       weathers.value = []
       await axios.get(`https://api.weatherapi.com/v1/forecast.json?key=7651423609bc4c27b00165325221012&q=${countryAndCity}&days=4&aqi=no&alerts=no`)
           .then(e => weathers.value.push(e.data))
+          .catch(e => console.log(e))
     }
 
     const deleteItem = (item) => {
@@ -66,14 +73,22 @@ export default {
     }
 
     const favoritesItem = (item) => {
-      inActiveWeather.value = []
+      inActiveWeather = []
       isActiveModal.value = true
-      inActiveWeather.value.push(item)
+      inActiveWeather = item
+
     }
     const addThisWeather = () => {
-        allWeathers.value.push(weathers.value)
-        isActiveModal.value = false
-    //   add link weather https://...    on Json.stringify and add on city ${city} on function 
+      let arrLocalCity = [];
+
+        for(let i = 0; i < allWeathers.value.length; i++) {
+          allWeathers.value[i].forEach(e => arrLocalCity.push(e.location.name))
+        }
+
+        if(!allWeathers.value.length || !arrLocalCity.includes(inActiveWeather)){
+          allWeathers.value.push(weathers.value)
+        }
+      isActiveModal.value = false
     }
     return {
       weathers,
@@ -83,7 +98,7 @@ export default {
       allWeathers,
       favoritesItem,
       isActiveModal,
-      addThisWeather
+      addThisWeather,
     }
   }
 }
