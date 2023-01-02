@@ -33,7 +33,7 @@ export default {
     weathers:{
       type: Array,
       required: true
-    }
+    },
   },
   setup(props, context) {
     const searchLocationInput = ref('')

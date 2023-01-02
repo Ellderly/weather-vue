@@ -6,11 +6,11 @@
 <!--        <button @click.prevent="sortMax">Max</button>-->
 <!--        <button @click.prevent="sortMin">Min</button>-->
 <!--      </li>-->
-      <li v-for="item in allWeathers" :key="item" @click="changeWeather(item[0].location.name, item[0].location.country)">
-        <p>{{item[0].location.name}}</p>
-        <p>{{item[0].forecast.forecastday[0].day.maxtemp_c}}<sup>o</sup></p>
-        <p>{{item[0].forecast.forecastday[0].day.mintemp_c}}<sup>o</sup></p>
-        <button class="deleteItem" @click.stop="deleteItem(item[0])"></button>
+      <li v-for="item in allWeathers" :key="item" @click="changeWeather(item.location.name, item.location.country)">
+        <p>{{item.location.name}}</p>
+        <p>{{item.forecast.forecastday[0].day.maxtemp_c}}<sup>o</sup></p>
+        <p>{{item.forecast.forecastday[0].day.mintemp_c}}<sup>o</sup></p>
+        <button class="deleteItem" @click.stop="deleteItem(item)"></button>
       </li>
     </ul>
   </div>
