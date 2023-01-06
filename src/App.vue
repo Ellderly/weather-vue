@@ -26,7 +26,7 @@
 
 import SearchCity from "@/components/Search-City.vue";
 import Location from "@/components/Location.vue";
-import {onMounted, ref, watch} from "vue";
+import {onMounted, ref, watch, reactive} from "vue";
 import axios from "axios";
 import Modal from "@/components/Modal.vue";
 
@@ -42,12 +42,12 @@ export default {
     const setLocalStorageSities = ref([])
     let countryAndCity = null
     let arrLocalCity = []
-    let deleteArrLocalCity = null;
 
 
       const textProd = async (e) => {
         inActiveWeather.value = e
         console.log(inActiveWeather.value)
+        console.log(weathers.value)
       try {
         weathers.value = []
         await axios.get(`https://api.weatherapi.com/v1/forecast.json?key=7651423609bc4c27b00165325221012&q=${e}&days=4&aqi=no&alerts=no`)
@@ -57,6 +57,7 @@ export default {
         alert(e + " " + 'you entered the wrong name, try again in another language')
       }
     }
+
     onMounted(() => {
          navigator.geolocation.getCurrentPosition(position => {
           const latitude = position.coords.latitude
@@ -89,9 +90,9 @@ export default {
       Promise.all(cityPromises).then(results => {
         allWeathers.value = results;
       });
-
 // придумать решение задачи с localStorage. Обратиться с к chatGPT
     })
+
     const itemWeather = async (item, country) => {
          countryAndCity = `${item}, ${country}`
       weathers.value = []
@@ -130,6 +131,7 @@ export default {
         }
       isActiveModal.value = false
     }
+
     return {
       weathers,
       itemWeather,
@@ -142,7 +144,7 @@ export default {
       currentTime,
       localStorageSities,
       setLocalStorageSities,
-      arrLocalCity
+      arrLocalCity,
     }
   }
 }

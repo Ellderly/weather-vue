@@ -3,7 +3,7 @@
   <header class="header">
     <ul>
       <li><button @click="(e) => changePage = e.target.innerText">City</button></li>
-      <li><button @click="(e) => changePage = e.target.innerText">Favorites</button></li>
+      <li><button @click="(e) => changePage = e.target.innerText" :disabled="!allWeathers.length">Favorites</button></li>
     </ul>
   </header>
     <ThisCity v-if="changePage === 'City'"  :weathers="weathers"/>
@@ -52,7 +52,7 @@ export default {
 .location{
   max-width: 45%;
   width: 100%;
-  padding: 50px;
+  padding: 35px 50px;
   .header{
     ul{
       margin: 0;
@@ -71,6 +71,12 @@ export default {
         border-bottom: 2px solid #fff;
         &:hover{
           border-bottom: 2px solid green;
+        }
+        &:disabled{
+          color: gray;
+          &:hover{
+            border-bottom: none;
+          }
         }
       }
     }

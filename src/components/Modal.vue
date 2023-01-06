@@ -50,6 +50,7 @@ export default {
     h2{
       color: #363636;
       font-size: 20px;
+      margin: 0 0 15px 0;
     }
   }
 }

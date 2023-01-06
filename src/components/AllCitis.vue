@@ -1,7 +1,7 @@
 <template>
-  <div class="all-weathers">
+  <div class="all-weathers" >
     <ul v-if="allWeathers.length">
-<!--      на данный момент вырезано из контента-->
+<!--      на данный момент вырезано -->
 <!--      <li class="btnSort">-->
 <!--        <button @click.prevent="sortMax">Max</button>-->
 <!--        <button @click.prevent="sortMin">Min</button>-->
@@ -63,7 +63,7 @@ export default {
         background: rgba(159, 158, 158, 0.3);
       }
       p{
-        flex: 0 0 80px;
+        flex: 0 0 20%;
       }
       .deleteItem{
         position: relative;
