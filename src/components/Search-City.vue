@@ -39,8 +39,10 @@ export default {
     const searchLocationInput = ref('')
 
     const textProd = () => {
-      context.emit('textProd', searchLocationInput.value)
-      searchLocationInput.value = ''
+     if (searchLocationInput.value.length){
+       context.emit('textProd', searchLocationInput.value)
+       searchLocationInput.value = ''
+     }
     }
 
     const favoritesItem = (item) => {

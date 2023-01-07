@@ -69,27 +69,28 @@ export default {
                'https://api.weatherapi.com/v1/forecast.json?key=7651423609bc4c27b00165325221012&q=Kiev&days=4&aqi=no&alerts=no')
                .then(e => weathers.value.push(e.data))
          })
-      //доделать JSON
-          arrLocalCity.push(localStorage.getItem('arrLocalCity'));
-          arrLocalCity = arrLocalCity.map(e => e.split(','))
-          localStorageSities.value.push(localStorage.getItem('localStorageSities'))
-          if (localStorageSities.value.find(e => e !== null)){
-            localStorageSities.value[0].split(',').forEach(e => {
-              if(e.length) {
-                setLocalStorageSities.value.push(e)
-              }
-            })
-          }
-        const cityPromises = setLocalStorageSities.value.map(city => {
-         if (city !== null && city !== "") {
-          return axios.get(`https://api.weatherapi.com/v1/forecast.json?key=7651423609bc4c27b00165325221012&q=${city}&days=4&aqi=no&alerts=no`)
-              .then(response => response.data)
-              .catch(error => console.log(error));
+      if(localStorage.getItem('arrLocalCity')){
+        arrLocalCity.push(localStorage.getItem('arrLocalCity'));
+        arrLocalCity = arrLocalCity.map(e => e.split(','))
+        localStorageSities.value.push(localStorage.getItem('localStorageSities'))
+        if (localStorageSities.value.find(e => e !== null)){
+          localStorageSities.value[0].split(',').forEach(e => {
+            if(e.length) {
+              setLocalStorageSities.value.push(e)
+            }
+          })
         }
-      });
-      Promise.all(cityPromises).then(results => {
-        allWeathers.value = results;
-      });
+        const cityPromises = setLocalStorageSities.value.map(city => {
+          if (city !== null && city !== "") {
+            return axios.get(`https://api.weatherapi.com/v1/forecast.json?key=7651423609bc4c27b00165325221012&q=${city}&days=4&aqi=no&alerts=no`)
+                .then(response => response.data)
+                .catch(error => console.log(error));
+          }
+        });
+        Promise.all(cityPromises).then(results => {
+          allWeathers.value = results;
+        });
+      }
 // придумать решение задачи с localStorage. Обратиться с к chatGPT
     })
 
