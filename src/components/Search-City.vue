@@ -2,14 +2,14 @@
   <div class="searchBlock">
     <div class="header">
       <div class="logo">
-        WeatherEll
+        EllderWeather
       </div>
       <div class="location-wrapper">
         <LocationChange :weathers="weathers" @favoritesItem="favoritesItem"/>
       </div>
     </div>
     <main class="main">
-      <h1>Weather</h1>
+      <h1>EllderWeather</h1>
       <div class="line"></div>
       <form  @submit.prevent="textProd"  class="form">
           <div class="wrapperInputSearch">
