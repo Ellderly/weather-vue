@@ -2,14 +2,14 @@
   <div class="searchBlock">
     <div class="header">
       <div class="logo">
-        EllderWeather
+        WeatherWise
       </div>
       <div class="location-wrapper">
         <LocationChange :weathers="weathers" @favoritesItem="favoritesItem"/>
       </div>
     </div>
     <main class="main">
-      <h1>EllderWeather</h1>
+      <h1>WeatherWise</h1>
       <div class="line"></div>
       <form  @submit.prevent="textProd"  class="form">
           <div class="wrapperInputSearch">
@@ -42,6 +42,9 @@ export default {
      if (searchLocationInput.value.length){
        context.emit('textProd', searchLocationInput.value)
        searchLocationInput.value = ''
+     }
+     else{
+       console.log('error')
      }
     }
 
