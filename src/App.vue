@@ -114,20 +114,19 @@ export default {
     }
 
     const favoritesItem = (item) => {
-      inActiveWeather = []
+      inActiveWeather.value = []
       isActiveModal.value = true
-      inActiveWeather = item
-
+      inActiveWeather.value = item
     }
     const  addThisWeather =  () => {
-        if(!allWeathers.value.length || !arrLocalCity.includes(inActiveWeather)){
-          arrLocalCity.push(inActiveWeather)
+        if(!allWeathers.value.length || !arrLocalCity.includes(inActiveWeather.value)){
+          arrLocalCity.push(inActiveWeather.value)
           localStorage.setItem('arrLocalCity', arrLocalCity)
-          axios.get(`https://api.weatherapi.com/v1/forecast.json?key=7651423609bc4c27b00165325221012&q=${inActiveWeather}&days=4&aqi=no&alerts=no`)
+          axios.get(`https://api.weatherapi.com/v1/forecast.json?key=7651423609bc4c27b00165325221012&q=${inActiveWeather.value}&days=4&aqi=no&alerts=no`)
               .then(e => allWeathers.value.push(e.data))
               .catch(e => console.log(e))
 
-          localStorageSities.value.push(inActiveWeather)
+          localStorageSities.value.push(inActiveWeather.value)
           localStorage.setItem('localStorageSities', localStorageSities.value)
         }
       isActiveModal.value = false
